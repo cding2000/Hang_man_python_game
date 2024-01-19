@@ -22,7 +22,7 @@ for i in range(26):
     letters.append([x, y, chr(A + i), True])
 
 # fonts
-LETTER_FONT = pygame.font.SysFont('comicsans', 40)
+LETTER_FONT = pygame.font.SysFont('comicsans', 30)
 WORD_FONT = pygame.font.SysFont('comicsans', 60)
 TITLE_FONT = pygame.font.SysFont('comicsans', 70)
 
@@ -78,42 +78,25 @@ def draw():
 def display_message(message):
     pygame.time.delay(1000)
     win.fill(WHITE)
-    
-    # Adjust font size based on message length
-    font_size = 60 if len(message) < 20 else 40
-    text_font = pygame.font.SysFont('comicsans', font_size)
-    text = text_font.render(message, 1, BLACK)
-    
-    text_width, text_height = text.get_width(), text.get_height()
-    
-    # Center the text horizontally and vertically
-    x = WIDTH/2 - text_width/2
-    y = HEIGHT/2 - text_height/2
-    
-    if y < 0:
-        # If the text is too tall, adjust the vertical position to the top
-        y = 0
-    
-    win.blit(text, (x, y))
+    text = WORD_FONT.render(message, 1, BLACK)
+    win.blit(text, (WIDTH/2 - text.get_width()/2, HEIGHT/2 - text.get_height()/2))
     pygame.display.update()
     pygame.time.delay(1000)
 
 
-
-
 def restart_game():
-    global hangman_status, guessed, game_over, word, letters
+    global hangman_status, guessed, game_over, word
 
     hangman_status = 0
     guessed = []
     game_over = False
 
-    # Make all letters visible
-    for letter in letters:
-        letter[3] = True
-
     # Choose a new word for the restarted game
     word = random.choice(words)
+
+    # Reset the visibility of each letter
+    for letter in letters:
+        letter[3] = True
 
 
 def quit_game():
@@ -170,10 +153,11 @@ while True:
     main()
 
     # Display restart and quit options after the game is over
-    display_message("Do you want to play again? Press 'R' to restart, 'Q' to quit.")
+    display_message("Do you want to play again?")
+    # Add restart and quit buttons here
 
-    # Handle restart and quit input
-    restart_button = input().upper()
+    # Example:
+    restart_button = input("Press 'R' to restart, 'Q' to quit: ").upper()
     if restart_button == 'R':
         restart_game()
     elif restart_button == 'Q':
