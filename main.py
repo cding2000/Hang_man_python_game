@@ -176,17 +176,50 @@ def get_hint():
     else:
         return None
 
+class Button:
+    def __init__(self, x, y, width, height, text, color, hover_color, action):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.text = text
+        self.color = color
+        self.hover_color = hover_color
+        self.action = action
 
-# Add a game loop for restarting or quitting
+    def draw(self, win):
+        pygame.draw.rect(win, self.color, self.rect)
+        pygame.draw.rect(win, (0, 0, 0), self.rect, 2)
+        text = WORD_FONT.render(self.text, 1, (0, 0, 0))
+        win.blit(text, (self.rect.centerx - text.get_width() / 2, self.rect.centery - text.get_height() / 2))
+
+    def is_hover(self, pos):
+        return self.rect.collidepoint(pos)
+
+# Create buttons for restart and quit
+restart_button = Button(WIDTH // 8, HEIGHT // 2, 220, 50, 'Restart', (0, 255, 0), (0, 200, 0), restart_game)
+quit_button = Button(WIDTH // 4 * 3, HEIGHT // 2, 150, 50, 'Quit', (255, 0, 0), (200, 0, 0), quit_game)
+
+def quit_screen():
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if restart_button.is_hover(pygame.mouse.get_pos()):
+                    restart_game()
+                    return
+                elif quit_button.is_hover(pygame.mouse.get_pos()):
+                    quit_game()
+
+        win.fill(WHITE)
+        text = WORD_FONT.render("Do you want to play again?", 1, BLACK)
+        win.blit(text, (WIDTH / 2 - text.get_width() / 2, HEIGHT / 4 - text.get_height() / 2))
+
+        restart_button.draw(win)
+        quit_button.draw(win)
+
+        pygame.display.update()
+
+# Replace the old quit screen loop with the new quit_screen function
 while True:
     main()
-
-    # Display restart and quit options after the game is over
-    display_message("Do you want to play again?")
-    restart_button = input("Press 'R' to restart, 'Q' to quit: ").upper()
-    if restart_button == 'R':
-        restart_game()
-    elif restart_button == 'Q':
-        quit_game()
-    else:
-        print("Invalid input. Please press 'R' to restart or 'Q' to quit.")
+    quit_screen()
