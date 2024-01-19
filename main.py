@@ -41,6 +41,10 @@ guessed = []
 # Add a game_over variable
 game_over = False
 
+# Add a variable to limit the number of hints
+MAX_HINTS = 1
+hints_used = 0
+
 # colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -50,7 +54,7 @@ def draw():
     win.fill(WHITE)
 
     # draw title
-    text = TITLE_FONT.render("DEVELOPER HANGMAN", 1, BLACK)
+    text = TITLE_FONT.render("HANGMAN", 1, BLACK)
     win.blit(text, (WIDTH/2 - text.get_width()/2, 20))
 
     # draw word
@@ -71,6 +75,11 @@ def draw():
             text = LETTER_FONT.render(ltr, 1, BLACK)
             win.blit(text, (x - text.get_width()/2, y - text.get_height()/2))
 
+    # Draw hint button in the top right corner
+    pygame.draw.rect(win, BLACK, (WIDTH - 120, 20, 100, 50))
+    text = LETTER_FONT.render("Hint", 1, WHITE)
+    win.blit(text, (WIDTH - 70 - text.get_width()/2, 45 - text.get_height()/2))
+
     win.blit(images[hangman_status], (150, 100))
     pygame.display.update()
 
@@ -85,11 +94,12 @@ def display_message(message):
 
 
 def restart_game():
-    global hangman_status, guessed, game_over, word
+    global hangman_status, guessed, game_over, word, hints_used
 
     hangman_status = 0
     guessed = []
     game_over = False
+    hints_used = 0
 
     # Choose a new word for the restarted game
     word = random.choice(words)
@@ -105,7 +115,7 @@ def quit_game():
 
 
 def main():
-    global hangman_status, game_over
+    global hangman_status, game_over, hints_used
 
     FPS = 60
     clock = pygame.time.Clock()
@@ -128,6 +138,15 @@ def main():
                             guessed.append(ltr)
                             if ltr not in word:
                                 hangman_status += 1
+                                if hangman_status == 6:
+                                    hints_used = 0  # Reset hints if the game is lost
+
+                # Check if the hint button is clicked
+                if WIDTH - 120 < m_x < WIDTH - 20 and 20 < m_y < 70 and hints_used < MAX_HINTS:
+                    hint_letter = get_hint()
+                    if hint_letter:
+                        guessed.append(hint_letter)
+                        hints_used += 1
 
         draw()
 
@@ -148,15 +167,22 @@ def main():
             break
 
 
+def get_hint():
+    # Get a hint by revealing a random letter from the word
+    unrevealed_letters = [letter for letter in word if letter not in guessed]
+    if unrevealed_letters:
+        hint_letter = random.choice(unrevealed_letters)
+        return hint_letter
+    else:
+        return None
+
+
 # Add a game loop for restarting or quitting
 while True:
     main()
 
     # Display restart and quit options after the game is over
     display_message("Do you want to play again?")
-    # Add restart and quit buttons here
-
-    # Example:
     restart_button = input("Press 'R' to restart, 'Q' to quit: ").upper()
     if restart_button == 'R':
         restart_game()
