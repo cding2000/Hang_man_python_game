@@ -23,7 +23,7 @@ for i in range(26):
 
 # fonts
 LETTER_FONT = pygame.font.SysFont('comicsans', 30)
-WORD_FONT = pygame.font.SysFont('comicsans', 60)
+WORD_FONT = pygame.font.SysFont('comicsans', 40)
 TITLE_FONT = pygame.font.SysFont('comicsans', 70)
 
 # load images
@@ -34,7 +34,7 @@ for i in range(7):
 
 # game variables
 hangman_status = 0
-words = ["IDE", "REPLIT", "PYTHON", "PYGAME"]
+words = ["PYTHON", "PROGRAMMING", "LANGUAGE", "CODE", "COMPUTER", "DEVELOPMENT", "ALGORITHM", "DATA", "SCIENCE", "MACHINE", "LEARNING", "ARTIFICIAL", "INTELLIGENCE", "WEB", "APPLICATION", "SOFTWARE", "DEVELOPER", "VARIABLE", "FUNCTION", "LOOP", "LIBRARY", "FRAMEWORK", "DATABASE", "SERVER", "NETWORK", "SECURITY", "CLOUD", "ANALYSIS", "DESIGN", "DEBUGGING", "TESTING", "AUTOMATION", "VERSION", "CONTROL", "REPOSITORY", "REPOSITORY", "FRONT-END", "BACK-END", "FULL-STACK", "FRONTEND", "BACKEND", "RESPONSIVE", "INTERFACE", "API", "AGILE", "SCRUM", "SPRINT", "ITERATION", "PRODUCTIVITY", "EFFICIENCY", "OPTIMIZATION", "EFFORT", "COLLABORATION", "DOCUMENTATION", "REPOSITORY", "DEBUGGING", "TESTING", "UNIT", "INTEGRATION", "DEPLOYMENT", "CONTAINER", "VIRTUALIZATION"]
 word = random.choice(words)
 guessed = []
 
