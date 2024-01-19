@@ -12,8 +12,7 @@ A classic Hangman Game implemented in Python using the Pygame library.
 - [Controls](#controls)
 - [File Structure](#file-structure)
 - [Screenshots](#screenshots)
-- [Credits](#credits)
-- [License](#license)
+- [Libraries Used](#libraries-used)
 
 ## Overview
 
@@ -30,7 +29,7 @@ This Hangman Game allows users to guess letters to reveal a hidden word. The gam
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/hangman-game.git
+    git clone git@github.com:cding2000/Hang_man_python_game.git
     ```
 
 2. Navigate to the project directory:
@@ -67,10 +66,15 @@ This Hangman Game allows users to guess letters to reveal a hidden word. The gam
 
 ## File Structure
 
-- `hangman_game.py`: Main Python script containing the game logic.
+- `main.py`: Main Python script containing the game logic.
 - `hangman0.png` to `hangman6.png`: Images representing the hangman's status.
 
 ## Screenshots
 
 ![main page hangman](https://github.com/cding2000/Hang_man_python_game/assets/82928785/cfb16b7c-2e2e-4641-bf24-d9db9bea24b8)
+
+## Libraries Used
+
+- **Pygame :** Pygame is a cross-platform set of Python modules designed for writing video games. It provides functionalities for handling graphics, sound, and user input, making it suitable for game development.
+
 
